@@ -1,0 +1,6 @@
+__pycache__/
+recipe_env
+env_example.txt
+meal_planner.db
+startup.sh
+.env
