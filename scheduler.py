@@ -159,10 +159,14 @@ class MealPlannerScheduler:
             print(f"   📊 {meal_plan.breakfast.nutrition.calories} kcal | P: {meal_plan.breakfast.nutrition.protein}g | C: {meal_plan.breakfast.nutrition.carbs}g | F: {meal_plan.breakfast.nutrition.fat}g")
             
             print("   📝 Ingredients:")
-            for i, ingredient in enumerate(meal_plan.breakfast.ingredients[:5], 1):
+            for i, ingredient in enumerate(meal_plan.breakfast.ingredients, 1):
                 print(f"      {i}. {ingredient}")
-            if len(meal_plan.breakfast.ingredients) > 5:
-                print(f"      ... and {len(meal_plan.breakfast.ingredients) - 5} more")
+
+
+            print("   🍳 Instructions:")
+            for i, instruction in enumerate(meal_plan.breakfast.instructions, 1):
+                print(f"      {i}. {instruction}")
+
         
         # Display lunch
         if meal_plan.lunch:
@@ -175,6 +179,12 @@ class MealPlannerScheduler:
                 print(f"      {i}. {ingredient}")
             if len(meal_plan.lunch.ingredients) > 5:
                 print(f"      ... and {len(meal_plan.lunch.ingredients) - 5} more")
+
+            print("   🍳 Instructions:")
+            for i, instruction in enumerate(meal_plan.lunch.instructions[:3], 1):
+                print(f"      {i}. {instruction}")
+            if len(meal_plan.lunch.instructions) > 3:
+                print(f"      ... and {len(meal_plan.lunch.instructions) - 3} more steps")
         
         # Display dinner
         if meal_plan.dinner:
@@ -187,6 +197,12 @@ class MealPlannerScheduler:
                 print(f"      {i}. {ingredient}")
             if len(meal_plan.dinner.ingredients) > 5:
                 print(f"      ... and {len(meal_plan.dinner.ingredients) - 5} more")
+
+            print("   🍳 Instructions:")
+            for i, instruction in enumerate(meal_plan.dinner.instructions[:3], 1):
+                print(f"      {i}. {instruction}")
+            if len(meal_plan.dinner.instructions) > 3:
+                print(f"      ... and {len(meal_plan.dinner.instructions) - 3} more steps")
         
         # Display nutrition summary
         total_nutrition = meal_plan.get_total_nutrition()

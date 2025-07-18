@@ -49,44 +49,57 @@ class RecipeGenerator:
             return self._create_fallback_recipe(meal_type, cuisine, preferred_protein, macro_goals)
     
     def _create_recipe_prompt(self, meal_type: str, cuisine: str, preferred_protein: str,
-                            macro_goals: Dict[str, int], max_prep_time: int) -> str:
+                        macro_goals: Dict[str, int], max_prep_time: int) -> str:
         """Create a detailed prompt for recipe generation."""
-        
-        return f"""
-You are a professional chef and nutritionist. Create a detailed recipe in JSON format for a {meal_type} meal.
+    
+        return f"""You are a professional chef and nutritionist. Create a detailed recipe in JSON format for a {meal_type} meal.
 
-Requirements:
-- Cuisine: {cuisine}
-- Preferred protein: {preferred_protein}
-- Maximum preparation time: {max_prep_time} minutes
-- Nutritional goals: {macro_goals['calories']} calories, {macro_goals['protein']}g protein, {macro_goals['carbs']}g carbs, {macro_goals['fat']}g fat
-- Must be healthy and balanced
-- Include detailed step-by-step instructions
-- List all ingredients with exact amounts and units
+    Requirements:
+    - Cuisine: {cuisine}
+    - Preferred protein: {preferred_protein}
+    - Maximum preparation time: {max_prep_time} minutes
+    - Nutritional goals: {macro_goals['calories']} calories, {macro_goals['protein']}g protein, {macro_goals['carbs']}g carbs, {macro_goals['fat']}g fat
+    - Must be healthy and balanced
+    - Include detailed step-by-step instructions
+    - List all ingredients with exact amounts and units
 
-Return ONLY a valid JSON object with this exact structure:
-{{
-    "name": "Recipe Name",
-    "prep_time": 15,
-    "cook_time": 20,
-    "servings": 1,
-    "ingredients": [
-        {{"name": "ingredient name", "amount": 1.0, "unit": "cup", "category": "protein"}}
-    ],
-    "instructions": [
-        "Step 1: ...",
-        "Step 2: ..."
-    ],
-    "nutrition": {{
-        "calories": 500,
-        "protein": 25.0,
-        "carbs": 45.0,
-        "fat": 20.0
+    CRITICAL: Return ONLY a valid JSON object. Do not include any text before or after the JSON.
+
+    Use this EXACT structure with correct data types:
+    {{
+        "name": "Recipe Name Here",
+        "prep_time": 15,
+        "cook_time": 20,
+        "servings": 1,
+        "ingredients": [
+            {{"name": "chicken breast", "amount": 150, "unit": "grams", "category": "protein"}},
+            {{"name": "rice", "amount": 0.75, "unit": "cup", "category": "grain"}},
+            {{"name": "onion", "amount": 1, "unit": "medium", "category": "vegetable"}}
+        ],
+        "instructions": [
+            "Step 1: Prepare all ingredients by washing and chopping as needed",
+            "Step 2: Heat oil in a pan over medium heat",
+            "Step 3: Cook the protein until done",
+            "Step 4: Serve hot"
+        ],
+        "nutrition": {{
+            "calories": 500,
+            "protein": 25.5,
+            "carbs": 45.0,
+            "fat": 20.0
+        }}
     }}
-}}
 
-Make sure the recipe is authentic to {cuisine} cuisine and uses {preferred_protein} as the main protein source.
-"""
+    IMPORTANT RULES:
+    1. ALL numbers must be numeric (not quoted strings): prep_time: 15, NOT "15"
+    2. Amount must be a number: "amount": 150, NOT "amount": "150g"
+    3. Units are separate: "amount": 150, "unit": "grams"
+    4. No trailing commas in JSON
+    5. Use double quotes for all strings
+    6. Make the recipe authentic {cuisine} cuisine with {preferred_protein}
+    7. Ensure nutrition values match the goals: {macro_goals['calories']} calories, {macro_goals['protein']}g protein
+
+    Return only the JSON object, nothing else."""
     
     def _parse_recipe_response(self, response: str) -> Dict:
         """Parse the Ollama response into a structured recipe."""
