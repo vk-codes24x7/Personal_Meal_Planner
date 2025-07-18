@@ -1,12 +1,11 @@
 # 🍽️ AI-Powered Meal Planning Automation System
 
-An intelligent, local automation system that generates personalized meal plans and grocery lists using AI, then sends them to your WhatsApp automatically.
+An intelligent, CLI based local automation system that generates personalized meal plans and grocery lists using AI
 
 ## ✨ Features
 
 - **🤖 AI-Powered Recipe Generation**: Uses Ollama (local LLM) to create personalized recipes
 - **📅 Automated Scheduling**: Sends meal plans at 8:00 AM and grocery lists at 9:00 PM daily
-- **📱 WhatsApp Integration**: Automatic delivery of meal plans and grocery lists
 - **🎯 Macro Tracking**: Recipes match your daily nutrition goals (2000 kcal, 150g protein, 180g carbs, 60g fat)
 - **⏰ Quick Prep**: All meals take under 30 minutes to prepare
 - **🏷️ Cuisine & Protein Preferences**: Customizable cuisine style and preferred protein sources
@@ -19,7 +18,7 @@ An intelligent, local automation system that generates personalized meal plans a
 
 1. **Python 3.8+**
 2. **Ollama** installed and running locally
-3. **WhatsApp API** (optional - messages will be logged if not configured)
+
 
 ### Installation
 
@@ -184,16 +183,6 @@ python main.py setup
 }
 ```
 
-## 🔧 WhatsApp Integration
-
-The system supports various WhatsApp API providers:
-
-- **Twilio WhatsApp API**
-- **MessageBird WhatsApp API**
-- **WhatsApp Business API**
-- **Custom WhatsApp API services**
-
-If WhatsApp is not configured, messages will be logged to the console instead.
 
 ## 🤖 Ollama Integration
 
@@ -234,9 +223,8 @@ Recipe_Automation/
 ### Adding New Features
 
 1. **New Recipe Sources**: Extend `recipe_generator.py`
-2. **Additional Messaging**: Extend `whatsapp_sender.py`
-3. **New Data Models**: Add to `models.py`
-4. **Database Changes**: Modify `database.py`
+2. **New Data Models**: Add to `models.py`
+3. **Database Changes**: Modify `database.py`
 
 ### Testing
 
@@ -269,13 +257,8 @@ python -c "from recipe_generator import recipe_generator; print(recipe_generator
    ollama serve
    ```
 
-2. **WhatsApp Messages Not Sending**
 
-   - Check API credentials in `.env`
-   - Verify phone number format (+1234567890)
-   - Test with `python main.py test`
-
-3. **Database Errors**
+2. **Database Errors**
    ```bash
    # Reset database
    rm meal_planner.db
@@ -287,7 +270,6 @@ python -c "from recipe_generator import recipe_generator; print(recipe_generator
 The system provides detailed logging:
 
 - Recipe generation status
-- WhatsApp message delivery
 - Database operations
 - Scheduler events
 
